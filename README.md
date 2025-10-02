@@ -1,115 +1,126 @@
 
-# Image Classification App (Keras/TensorFlow)
+# 🧠 ImageClassificationApp
 
-A complete image classification project using TensorFlow/Keras on Fashion-MNIST or CIFAR-10 with:
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-green.svg)
+![License](https://img.shields.io/badge/License-MIT-success.svg)
 
-- Data loading & preprocessing [+ augmentation]  
-- Two CNN architectures  
-- Training & evaluation scripts  
-- Metrics: Accuracy, Precision, Recall, F1-score  
-- Confusion matrix and training curves  
-- Sample correctly classified and misclassified indices  
-- Saved models for inference  
-- Optional Streamlit app for image upload & prediction  
+A **complete Deep Learning Image Classification application** built with **TensorFlow/Keras**.  
+Supports **Fashion-MNIST** and **CIFAR-10**, with **data augmentation, CNN architectures, training/evaluation scripts, and an optional Streamlit app** for real-time inference.
 
-## Project Structure
+---
+
+## ✨ Features
+
+- 📂 **Dataset Handling**
+  - Auto-download (Fashion-MNIST / CIFAR-10)
+  - Preprocessing (resize, normalize, train/val/test split)
+  - Data augmentation (rotation, flipping, shifting)
+
+- 🏗️ **Model Development**
+  - CNN built **from scratch** with Conv, Pooling, Dropout & BatchNorm
+  - Two architectures: `simple_cnn` and `deeper_cnn`
+  - Optimized with Adam + EarlyStopping
+
+- 📊 **Evaluation**
+  - Accuracy, Precision, Recall, F1-score
+  - Confusion Matrix
+  - Training vs Validation curves
+  - Correct & misclassified samples
+
+- 🧪 **Experimentation**
+  - Train with/without augmentation
+  - Compare multiple CNNs
+  - Save the **best model** for inference
+
+- 🌐 **Deployment (Optional)**
+  - **Streamlit app** for inference
+  - Upload images → view predictions + probability chart
+
+---
+
+## 📂 Project Structure
 
 ```
 ImageClassificationApp/
-├─ app/
-│  └─ streamlit_app.py         # Simple web UI for inference
-├─ data/
-│  └─ README.md                # Dataset guidance (auto-downloads when training)
-├─ models/                     # Saved models (.h5)
-├─ notebooks/
-│  └─ Training_Experiments.ipynb
-├─ results/                    # Plots, metrics, CM
-├─ src/
-│  ├─ data.py                  # Load/augment datasets
-│  ├─ models.py                # Two CNN architectures
-│  ├─ train.py                 # Training script (with/without augmentation)
-│  └─ evaluate.py              # Evaluation script (report + confusion matrix)
-├─ utils/
-│  └─ plots.py                 # Plot helpers
+├─ app/                  # Streamlit app
+├─ data/                 # Datasets (auto-downloaded)
+├─ models/               # Saved models (.h5)
+├─ notebooks/            # Jupyter notebooks
+├─ results/              # Plots, metrics, confusion matrix
+├─ src/                  # Training & evaluation scripts
+├─ utils/                # Plotting utilities
 ├─ requirements.txt
 ├─ .gitignore
 └─ README.md
 ```
 
-## Datasets
+---
 
-- Fashion-MNIST (default)  
-- CIFAR-10  
+## ⚡ Quick Start
 
-Datasets auto-download via Keras the first time you run training/evaluation.
-
-## Setup
-
+### 1️⃣ Setup
 ```bash
 python -m venv .venv
 # Windows: .venv\Scripts\activate
-# macOS/Linux:
+# Linux/Mac:
 source .venv/bin/activate
 
 pip install -r requirements.txt
 ```
 
-## Training
-
-Train two CNNs with and without augmentation, saving the best model by validation accuracy.
-
+### 2️⃣ Train a Model
 ```bash
-# Simple CNN on Fashion-MNIST without augmentation
+# Simple CNN (Fashion-MNIST)
 python src/train.py --dataset fashion_mnist --model_name simple_cnn --epochs 10 --batch_size 64
 
-# Simple CNN with augmentation
-python src/train.py --dataset fashion_mnist --model_name simple_cnn --epochs 10 --batch_size 64 --augment
+# With augmentation
+python src/train.py --dataset fashion_mnist --model_name simple_cnn --epochs 10 --augment
 
-# Deeper CNN on CIFAR-10
+# Deeper CNN (CIFAR-10)
 python src/train.py --dataset cifar10 --model_name deeper_cnn --epochs 30 --batch_size 128 --augment
 ```
 
-Artifacts:
-
-- Saved model: models/<dataset>_<model>[_aug].h5  
-- Plots: results/<dataset>_<model>[_aug]_loss.png, ..._accuracy.png  
-- Report: results/<dataset>_<model>_report.json  
-
-## Evaluation
-
+### 3️⃣ Evaluate
 ```bash
 python src/evaluate.py --dataset fashion_mnist --model_path models/fashion_mnist_simple_cnn.h5
 ```
 
-Outputs:
+Generates:
+- `classification_report.json`
+- `confusion_matrix.png`
+- `correct_indices.npy` & `misclassified_indices.npy`
 
-- results/classification_report.json (includes precision/recall/F1 per class)  
-- results/confusion_matrix.png  
-- results/correct_indices.npy, results/misclassified_indices.npy (indices into test set)  
-
-You can visualize these in the notebook to show correctly classified and misclassified samples.
-
-## Notebook
-
-Open `notebooks/Training_Experiments.ipynb` for an end-to-end interactive workflow with plots and quick experiments.
-
-## Streamlit App (Optional)
-
+### 4️⃣ Run Web App (Optional)
 ```bash
 streamlit run app/streamlit_app.py
 ```
+- Upload an image → See prediction & probability chart
 
-- Select dataset mapping and provide a path to a trained .h5 model in models/.  
-- Upload an image to get the predicted class and probability bar chart.  
+---
 
-## Results (Example Targets)
+## 📊 Expected Results
+- **Fashion-MNIST**: ~90–93% accuracy (10–15 epochs, simple CNN)
+- **CIFAR-10**: ~70–80% accuracy (30+ epochs, deeper CNN + augmentation)
 
-- Fashion-MNIST: ~0.90–0.93 test accuracy (simple CNN, 10–15 epochs).  
-- CIFAR-10: ~0.70–0.80 test accuracy (deeper CNN, 30+ epochs with augmentation).  
+---
 
-Results vary by compute, epochs, and augmentation settings.
+## 🔧 Tech Stack
+- 🐍 Python 3.8+
+- 🔥 TensorFlow / Keras
+- 📚 NumPy, scikit-learn, matplotlib
+- 🎨 Streamlit (for web UI)
 
-## Zip-Ready
+---
 
-This repo excludes heavy data and cache files via .gitignore. You can zip the folder directly.  
-Generated on 2025-10-02.
+## 📜 License
+Licensed under the **MIT License**. Free to use, modify, and share.
+
+---
+
+⭐ If you find this useful, don’t forget to **star this repo**!  
+
+---
+
+*Generated on 2025-10-02*
